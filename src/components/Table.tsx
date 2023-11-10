@@ -1,40 +1,38 @@
 import { useState, useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { ProductService } from '@/API/ProductService';
+import { UsersService } from '@/API/UsersService';
 
-interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
-  description?: string;
-  image?: string;
-  price?: number;
-  category?: string;
-  quantity?: number;
-  inventoryStatus?: string;
-  rating?: number;
+interface User {
+  id: string;
+  data: string;
+  name: string;
+  description: string;
+  equipment: string;
+  image: string;
+  importan: string;
 }
 
 const columns = [
-  { field: 'code', header: 'Дата' },
-  { field: 'name', header: 'Важность' },
-  { field: 'category', header: 'Оборудование' },
-  { field: 'quantity', header: 'Ответственный' },
+  { field: 'data', header: 'Дата' },
+  { field: 'importan', header: 'Важность' },
+  { field: 'equipment', header: 'Оборудование' },
+  { field: 'description', header: 'Сообщение' },
+  { field: 'name', header: 'Ответственный' },
 ];
 
 export default function Table() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProducts, setSelectedProducts] = useState<Product[] | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<User[] | null>(null);
 
   useEffect(() => {
-    ProductService.getProducts().then((data) => setProducts(data));
+    UsersService.getUsers().then((data) => setUsers(data));
   }, []);
 
   return (
     <div className="card">
       <DataTable
-        value={products}
+        value={users}
         paginator
         showGridlines
         rows={7}

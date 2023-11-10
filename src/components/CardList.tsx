@@ -1,38 +1,56 @@
-import { ProductService } from '@/API/ProductService';
 import { useEffect, useState } from 'react';
 import CardItem from './CardItem';
+import { Paginator } from 'primereact/paginator';
+import { UsersService } from '@/API/UsersService';
 
-interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
+interface User {
+  id: string;
+  data: string;
+  name: string;
   description: string;
-  image?: string;
-  price?: number;
-  category?: string;
-  quantity?: number;
-  inventoryStatus?: string;
-  rating?: number;
+  equipment: string;
+  image: string;
+  importan: string;
 }
 
 const CardList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(6);
 
   useEffect(() => {
-    ProductService.getProducts().then((data) => setProducts(data));
+    UsersService.getUsers().then((data) => setUsers(data));
   }, []);
+
+  const onPageChange = (event: { first: number; rows: number }) => {
+    setFirst(event.first);
+    setRows(event.rows);
+  };
 
   return (
     <>
       <div className="grid">
-        {products.map((product) => (
-          <div className="col-4">
+        {users.slice(first, first + rows).map((user) => (
+          <div key={user.id} className="col-4">
             <div className="text-center p-3 border-round-sm bg-primary font-bold">
-              <CardItem description={product.description} />
+              <CardItem
+                data={user.data}
+                importan={user.importan}
+                equipment={user.equipment}
+                description={user.description}
+                name={user.name}
+              />
             </div>
           </div>
         ))}
       </div>
+      <Paginator
+        first={first}
+        rows={rows}
+        totalRecords={users.length}
+        rowsPerPageOptions={[3, 6, 9]}
+        onPageChange={onPageChange}
+      />
     </>
   );
 };
