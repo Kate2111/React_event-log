@@ -3,20 +3,20 @@ import { FC } from 'react';
 import { Image } from 'primereact/image';
 import { Button } from 'primereact/button';
 import tor from '@/assets/tor.png';
+import { User } from '@/types/types';
 
-interface User {
-  id?: string;
-  data: string;
-  name: string;
-  description: string;
-  equipment: string;
-  image?: string;
-  importan: string;
+interface CarsItemProps {
+  info: User;
+  selected: boolean;
 }
 
-const CardItem: FC<User> = ({ data, importan, equipment, description, name }) => {
+const CardItem: FC<CarsItemProps> = ({ info, selected }) => {
+  console.log(selected);
   return (
-    <Card className="md:w-25rem w-full h-13rem align-items-center text-xs">
+    <Card
+      className={`md:w-25rem w-full h-13rem align-items-center text-xs ${
+        selected ? 'selected' : ''
+      }`}>
       <div className="flex ">
         <div className="flex-1 flex flex-row gap-4 ">
           <div className="flex flex-column align-items-start">
@@ -26,13 +26,13 @@ const CardItem: FC<User> = ({ data, importan, equipment, description, name }) =>
             <p>Сообщение</p>
           </div>
           <div className="flex flex-column align-items-start">
-            <p>{data}</p>
+            <p>{info.data}</p>
             <p className="flex flex-row gap-2 align-items-center">
               <Button className="p-button-success w-1rem h-1rem p-0 " />
-              {importan}
+              {info.importan}
             </p>
-            <p>{equipment}</p>
-            <p>{description}</p>
+            <p>{info.equipment}</p>
+            <p>{info.description}</p>
           </div>
         </div>
 
@@ -44,7 +44,7 @@ const CardItem: FC<User> = ({ data, importan, equipment, description, name }) =>
             height="100"
             className="border-circle overflow-hidden"
           />
-          <p>{name}</p>
+          <p>{info.name}</p>
         </div>
       </div>
     </Card>

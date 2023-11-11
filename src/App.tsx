@@ -1,8 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import '@/scss/app.scss';
-//import { useFetching } from '@/hooks/useFetching';
+import { useFetching } from '@/hooks/useFetching';
 import Home from '@/pages/Home';
-//import 'primereact/resources/themes/soho-dark/theme.css';
 import 'primereact/resources/themes/soho-dark/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -10,7 +9,7 @@ import 'primeflex/primeflex.css';
 import { PrimeReactProvider } from 'primereact/api';
 
 function App() {
-  //useFetching();
+  useFetching();
 
   return (
     <PrimeReactProvider>

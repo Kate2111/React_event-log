@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-//import pizzaSlice from './slice/pizzaSlice'
-import filterSlice from './slice/filterSlice';
-import cartSlice from './slice/cartSlice';
 import { useDispatch } from 'react-redux';
+import userSlice from './slice/userSlice';
+import searchSlice from './slice/searchSlice';
+import checkboxSlice from './slice/checkboxSlice';
 
 export const store = configureStore({
   reducer: {
-    //pizzas: pizzaSlice,
-    filter: filterSlice,
-    cart: cartSlice,
+    users: userSlice,
+    search: searchSlice,
+    checkbox: checkboxSlice,
   },
 });
 

@@ -1,14 +1,12 @@
-/* import { useEffect } from 'react'
-import { fetchPizza } from '@/store/slice/pizzaSlice'
-import { useAppDispatch } from '@/store/store'
+import { useEffect } from 'react';
+import { useAppDispatch } from '@/store/store';
+import { fetchUsers } from '@/store/actions/actionUsers';
 
 export const useFetching = () => {
-    const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        dispatch(fetchPizza('pizza'));
-        window.scrollTo(0, 0)
-    }, [])
-
-}
- */
+  useEffect(() => {
+    dispatch(fetchUsers());
+    window.scrollTo(0, 0);
+  }, []);
+};
