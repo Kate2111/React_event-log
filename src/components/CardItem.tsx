@@ -3,20 +3,26 @@ import { FC } from 'react';
 import { Image } from 'primereact/image';
 import { Button } from 'primereact/button';
 import tor from '@/assets/tor.png';
-import { User } from '@/types/types';
+import { useDispatch } from 'react-redux';
+import { NewUser, toggleSelectedUser } from '@/store/slice/searchSlice';
 
 interface CarsItemProps {
-  info: User;
-  selected: boolean;
+  info: NewUser;
 }
 
-const CardItem: FC<CarsItemProps> = ({ info, selected }) => {
-  console.log(selected);
+const CardItem: FC<CarsItemProps> = ({ info }) => {
+  const dispatch = useDispatch();
+
+  const onClick = (id: string) => {
+    dispatch(toggleSelectedUser(id));
+  };
+
   return (
     <Card
       className={`md:w-25rem w-full h-13rem align-items-center text-xs ${
-        selected ? 'selected' : ''
-      }`}>
+        info.selected ? 'selected' : ''
+      }`}
+      onClick={() => onClick(info.id)}>
       <div className="flex ">
         <div className="flex-1 flex flex-row gap-4 ">
           <div className="flex flex-column align-items-start">

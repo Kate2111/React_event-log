@@ -1,22 +1,17 @@
-import { useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useDispatch, useSelector } from 'react-redux';
 import { columnsTable } from '@/constant/constant';
-import { searchState } from '@/store/slice/searchSlice';
-import { checkboxState } from '@/store/slice/checkboxSlice';
-import { setSelectedUsers } from '@/store/slice/checkboxSlice';
+import { searchState, toggleSelectedUser } from '@/store/slice/searchSlice';
 
 export default function Table() {
   const { searchResults } = useSelector(searchState);
-  const { selectedUsers } = useSelector(checkboxState);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (searchResults && searchResults.length > 0 && !selectedUsers) {
-      dispatch(setSelectedUsers(searchResults.map((result) => result)));
-    }
-  }, [dispatch, searchResults, selectedUsers]);
+  const handlerSelect = (e) => {
+    const selectedId = e.data.id; // Получаем id выбранной строки
+    dispatch(toggleSelectedUser(selectedId));
+  };
 
   return (
     <div className="card">
@@ -26,15 +21,19 @@ export default function Table() {
         showGridlines
         rows={7}
         dataKey="id"
-        onSelectionChange={(e) => {
-          dispatch(setSelectedUsers(e.value));
-        }}
-        selection={selectedUsers!}
-        selectionMode="multiple"
+        //selectionMode="multiple"
+        //selection={searchResults}
+        //onSelectionChange={(e) => handlerSelect(e)}
+        className="selected"
         emptyMessage="No customers found.">
-        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
         {columnsTable.map((col) => (
-          <Column key={col.field} field={col.field} header={col.header} />
+          <Column
+            key={col.field}
+            field={col.field}
+            header={col.header}
+            className={searchResults.map((user) => (user.selected ? 'selected' : '')).join(' ')}
+            onClick={(e) => handlerSelect(e)}
+          />
         ))}
       </DataTable>
     </div>
