@@ -3,26 +3,35 @@ import { FC } from 'react';
 import { Image } from 'primereact/image';
 import { Button } from 'primereact/button';
 import tor from '@/assets/tor.png';
-import { useDispatch } from 'react-redux';
-import { NewUser, toggleSelectedUser } from '@/store/slice/searchSlice';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { User } from '@/types/types';
+import { selectedState, toggleSelectedUser } from '@/store/slice/selectedSlice';
 interface CarsItemProps {
-  info: NewUser;
+  info: User;
 }
 
 const CardItem: FC<CarsItemProps> = ({ info }) => {
+  const { selectedUsers } = useSelector(selectedState);
   const dispatch = useDispatch();
+  const isSelected = selectedUsers?.some((selectedUser) => selectedUser.id === info.id);
 
-  const onClick = (id: string) => {
-    dispatch(toggleSelectedUser(id));
+  const handleClick = () => {
+    dispatch(toggleSelectedUser(info));
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.keyCode === 32) {
+      dispatch(toggleSelectedUser(info));
+    }
   };
 
   return (
     <Card
-      className={`md:w-25rem w-full h-13rem align-items-center text-xs ${
-        info.selected ? 'selected' : ''
+      className={`md:w-25rem w-full h-13rem align-items-center text-xs cursor-pointer ${
+        isSelected ? 'selected' : ''
       }`}
-      onClick={() => onClick(info.id)}>
+      onClick={handleClick}
+      onKeyDown={handleKeyPress}>
       <div className="flex ">
         <div className="flex-1 flex flex-row gap-4 ">
           <div className="flex flex-column align-items-start">
