@@ -27,6 +27,7 @@ const Tabs = () => {
         <CardList />
       </TabPanel>
       <TabPanel
+        className="media-search_input"
         headerTemplate={createInputSearch}
         headerClassName="absolute right-0 flex align-items-center gap-2"></TabPanel>
     </TabView>

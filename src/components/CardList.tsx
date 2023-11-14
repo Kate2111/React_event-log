@@ -16,11 +16,9 @@ const CardList = () => {
 
   return (
     <>
-      <div className="grid">
+      <div className="flex flex-wrap gap-5 justify-content-around align-items-center m-4">
         {searchResults.slice(first, first + rows).map((user) => (
-          <div key={user.id} className="col-4">
-            <CardItem info={user} />
-          </div>
+          <CardItem key={user.id} info={user} />
         ))}
       </div>
       <Paginator

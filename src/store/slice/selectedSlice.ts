@@ -20,7 +20,7 @@ const selectedSlice = createSlice({
     toggleSelectedUser: (state, action: PayloadAction<User>) => {
       const existingUser = state.selectedUsers?.find((user) => user.id === action.payload.id);
 
-      if (existingUser) {
+      if (existingUser && state.selectedUsers) {
         state.selectedUsers = state.selectedUsers?.filter((user) => user.id !== action.payload.id);
       } else {
         state.selectedUsers = state.selectedUsers

@@ -2,7 +2,6 @@ import { Card } from 'primereact/card';
 import { FC } from 'react';
 import { Image } from 'primereact/image';
 import { Button } from 'primereact/button';
-import tor from '@/assets/tor.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { User } from '@/types/types';
 import { selectedState, toggleSelectedUser } from '@/store/slice/selectedSlice';
@@ -21,19 +20,21 @@ const CardItem: FC<CarsItemProps> = ({ info }) => {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.keyCode === 32) {
+      event.preventDefault();
       dispatch(toggleSelectedUser(info));
     }
   };
 
   return (
     <Card
-      className={`md:w-25rem w-full h-13rem align-items-center text-xs cursor-pointer ${
+      tabIndex={0}
+      className={`md:w-25rem w-full h-13rem align-items-center text-xs cursor-pointer media-card ${
         isSelected ? 'selected' : ''
       }`}
       onClick={handleClick}
       onKeyDown={handleKeyPress}>
-      <div className="flex ">
-        <div className="flex-1 flex flex-row gap-4 ">
+      <div className="card-content">
+        <div className="flex-1 flex flex-row gap-4 justify-content-center media-table">
           <div className="flex flex-column align-items-start">
             <p>Дата</p>
             <p>Важность</p>
@@ -43,7 +44,15 @@ const CardItem: FC<CarsItemProps> = ({ info }) => {
           <div className="flex flex-column align-items-start">
             <p>{info.data}</p>
             <p className="flex flex-row gap-2 align-items-center">
-              <Button className="p-button-success w-1rem h-1rem p-0 " />
+              <Button
+                className={` w-1rem h-1rem p-0  ${
+                  info.importan === 'Низкая'
+                    ? 'p-button-success'
+                    : info.importan === 'Высокая'
+                    ? 'p-button-warning'
+                    : 'p-button-danger'
+                }`}
+              />
               {info.importan}
             </p>
             <p>{info.equipment}</p>
@@ -53,7 +62,7 @@ const CardItem: FC<CarsItemProps> = ({ info }) => {
 
         <div className="flex flex-column gap-2 align-items-center">
           <Image
-            src={tor}
+            src="https://www.pinclipart.com/picdir/big/165-1653686_female-user-icon-png-download-user-colorful-icon.png"
             alt="Image"
             width="100"
             height="100"
@@ -67,10 +76,3 @@ const CardItem: FC<CarsItemProps> = ({ info }) => {
 };
 
 export default CardItem;
-/* className={
-    importan === 'низкая'
-      ? 'p-button-success'
-      : importan === 'высокая'
-      ? 'p-button-warning'
-      : 'p-button-danger'
-  } */
