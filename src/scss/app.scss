@@ -73,6 +73,12 @@ body {
   .card {
     padding: 0;
   }
+  .action {
+    flex-direction: column;
+  }
+  .p-button {
+    height: 37px;
+  }
 }
 
 @media (max-width: 350px) {

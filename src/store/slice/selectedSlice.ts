@@ -28,9 +28,17 @@ const selectedSlice = createSlice({
           : [action.payload];
       }
     },
+    addNewEvent: (state, action: PayloadAction<User>) => {
+      const findItem =
+        state.selectedUsers && state.selectedUsers.find((item) => item.id === action.payload.id);
+
+      if (!findItem) {
+        state.selectedUsers && state.selectedUsers.unshift(action.payload);
+      }
+    },
   },
 });
 
-export const { setSelectedUsers, toggleSelectedUser } = selectedSlice.actions;
+export const { setSelectedUsers, toggleSelectedUser, addNewEvent } = selectedSlice.actions;
 export const selectedState = (state: RootState) => state.selected;
 export default selectedSlice.reducer;

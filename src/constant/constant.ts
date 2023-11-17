@@ -5,3 +5,12 @@ export const columnsTable = [
   { field: 'description', header: 'Сообщение' },
   { field: 'name', header: 'Ответственный' },
 ];
+
+export const initialUser = {
+  id: '',
+  data: '',
+  name: '',
+  description: '',
+  equipment: '',
+  importan: '',
+};

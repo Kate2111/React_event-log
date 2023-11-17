@@ -17,9 +17,16 @@ export const searchSlice = createSlice({
     setSearchResults: (state, action: PayloadAction<User[]>) => {
       state.searchResults = action.payload.map((user) => ({ ...user, selected: true }));
     },
+    addNewEvent: (state, action: PayloadAction<User>) => {
+      const findItem = state.searchResults.find((item) => item.id === action.payload.id);
+
+      if (!findItem) {
+        state.searchResults.unshift(action.payload);
+      }
+    },
   },
 });
 
-export const { setSearchResults } = searchSlice.actions;
+export const { setSearchResults, addNewEvent } = searchSlice.actions;
 export const searchState = (state: RootState) => state.search;
 export default searchSlice.reducer;
